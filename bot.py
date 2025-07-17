@@ -60,7 +60,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         await query.delete_message()
         await update.effective_chat.send_photo(
-            photo=open("telegram_bot/5454203047233319344.jpg", "rb"),
+            photo=open("5454203047233319344.jpg", "rb"),
             
             caption=message,
             parse_mode="Markdown",

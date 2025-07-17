@@ -70,7 +70,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "👋 Привет! Добро пожаловать!\n\n"
         "Выбери, что тебя интересует ниже:"
     )
-    with open("telegram_bot/avavava.jpg", "rb") as photo:
+    with open("avavava.jpg", "rb") as photo:
         await update.message.reply_photo(
             photo=photo,
             caption=caption,
@@ -90,7 +90,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "👋 Готов помочь снова!\n\n"
             "Что вас интересует?"
         )
-        with open("telegram_bot/avavava.jpg", "rb") as photo:
+        with open("avavava.jpg", "rb") as photo:
             await query.message.chat.send_photo(
                 photo=photo,
                 caption=caption,
@@ -136,7 +136,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "👥 Приватка — твой быстрый старт в YouTube без хаоса.\n\n"
             "Готов(а) стартовать? Жми «ОПЛАТИТЬ ВХОД»."
         )
-        with open("telegram_bot/5454203047233319344.jpg", "rb") as photo:
+        with open("5454203047233319344.jpg", "rb") as photo:
             await query.message.chat.send_photo(
                 photo=photo,
                 caption=text,

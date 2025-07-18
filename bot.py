@@ -19,6 +19,7 @@ def main_menu_keyboard() -> InlineKeyboardMarkup:
         [
             [InlineKeyboardButton("💸 КУПИТЬ ДОСТУП В ПРИВАТКУ", callback_data="buy")],
             [InlineKeyboardButton("📦 ЧТО ВНУТРИ ПРИВАТКИ?", callback_data="inside")],
+            [InlineKeyboardButton("🎁 БЕСПЛАТНЫЙ УРОК", callback_data="free")],
             [InlineKeyboardButton("💼 НАСТАВНИЧЕСТВО И КОНСУЛЬТАЦИИ", callback_data="services")],
             [InlineKeyboardButton("❓ ЗАДАТЬ ВОПРОС ИЛЬЕ", url="https://t.me/nolfinil")],
         ]
@@ -38,6 +39,14 @@ def inside_keyboard() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(
         [
             [InlineKeyboardButton("✅ ОПЛАТИТЬ ВХОД", callback_data="payment")],
+            [InlineKeyboardButton("🔙 Назад", callback_data="menu")],
+        ]
+    )
+
+def free_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        [
+            [InlineKeyboardButton("💸 Купить приватку", callback_data="buy")],
             [InlineKeyboardButton("🔙 Назад", callback_data="menu")],
         ]
     )
@@ -110,11 +119,12 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "❗❗ *ДОСТУП ДАЁТСЯ НАВСЕГДА*\n\n"
             "Нажмите «ОПЛАТИТЬ ВХОД» для реквизитов."
         )
-        await query.edit_message_caption(
-            caption=text,
+        await query.message.chat.send_message(
+            text=text,
             parse_mode=constants.ParseMode.MARKDOWN,
             reply_markup=buy_keyboard(),
         )
+        await query.delete_message()
 
     # 3) Что внутри приватки
     elif query.data == "inside":
@@ -125,6 +135,10 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "🇰🇿 Казахстан — 10 000 ₸\n"
             "🇺🇿 Узбекистан — 250 000 сум\n"
             "🇷🇺 Россия — 1 800 ₽\n\n"
+            "*Если хочешь посмотреть отзывы и результаты*\n"
+            "Зайди на мой профиль в Instagram:\n"
+            "[кликни](https://www.instagram.com/nolfinil/)\n"
+            "и кликни по Актуальному *ПРИВАТКА* 🔥\n\n"
             "🔍 *Что внутри?*\n"
             "— Мини-курсы и видеоуроки по зарубежному YouTube\n"
             "— Подбор прибыльных ниш и стратегий\n"
@@ -144,6 +158,21 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 reply_markup=inside_keyboard(),
             )
         await query.delete_message()
+
+    elif query.data == "free":
+        text = (
+            "🎁 *Вот твой бесплатный урок по Зарубежному YouTube!*\n\n"
+            "💡 Держи ссылку:\n"
+            "https://youtu.be/UMhJ4PWP298\n\n"
+            "⚡️ Много таких уроков есть у меня в приватке!"
+        )
+        await query.message.chat.send_message(
+            text=text,
+            parse_mode=constants.ParseMode.MARKDOWN,
+            reply_markup=free_keyboard(),
+        )
+        await query.delete_message()
+
 
     # 4) Услуги (консультация и наставничество)
     elif query.data == "services":
@@ -167,11 +196,12 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "— Полный контроль и разбор результатов\n"
             "— Вместе доведём до цели"
         )
-        await query.edit_message_caption(
-            caption=message,
+        await query.message.chat.send_message(
+            text=message,
             parse_mode=constants.ParseMode.MARKDOWN,
             reply_markup=services_keyboard(),
         )
+        await query.delete_message()
 
     # 5) Реквизиты
     elif query.data == "payment":
@@ -190,12 +220,12 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "⚠️ *После оплаты нажми кнопку ниже, чтобы скинуть чек об оплате* 💬\n"
             "и я пришлю ссылку на канал 🔗"
         )
-        await query.edit_message_caption(
-            caption=text,
+        await query.message.chat.send_message(
+            text=text,
             parse_mode=constants.ParseMode.MARKDOWN,
             reply_markup=payment_keyboard(),
         )
-
+        await query.delete_message()
 
 # ──────────────────────────────
 # Запуск приложения
